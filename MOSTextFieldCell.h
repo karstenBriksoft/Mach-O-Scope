@@ -1,11 +1,10 @@
 //
-//  MOSOperation.h
+//  MOSTextFieldCell.h
 //  Mach-O-scope
 //
-//  Created by Scott Morrison on 10-05-08.
+//  Created by Scott Morrison on 10-09-04.
 //  Copyright 2010 Indev Software, Inc. All rights reserved.
 //
-
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //     1. Redistributions of source code must retain the above copyright
@@ -28,50 +27,13 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+
 #import <Cocoa/Cocoa.h>
-#import "EGODatabaseRow.h"
 
-enum {
-	kOffsetField = 1<<0,
-	kAddressField = 1<<1,
-	kBytesField = 1<<2,
-	kOpCodeField = 1<<3,
-	kDataField = 1<<4,
-	kSymbolsField = 1<<5,
-	kNotesField = 1<<6,
-	
-} ;
 
-@interface MOSOperation : NSObject {
-	NSInteger operationID;
-	NSInteger methodID;
-	NSInteger offset;
-	NSString * address;
-	NSString * bytes;
-	NSString * opCode;
-	NSString * data;
-	NSString * notes;
-	NSString * symbols;
-	id delegate;
+@interface MOSTextFieldCell :  NSTextFieldCell {
+	NSColor * highlightColor;
 	
 }
-
-
-	
-@property (assign) NSInteger operationID;
-@property (assign) NSInteger methodID;
-@property (assign) NSInteger offset;
-@property (copy) NSString * address;
-@property (copy) NSString * bytes;
-@property (copy) NSString * opCode;
-@property (copy) NSString * data;
-@property (copy) NSString * notes;
-@property (copy) NSString * symbols;
-@property (assign) id delegate;
-
-
-+(NSString*)createTableSqlStatement;
--(id)initWithResultRow:(EGODatabaseRow *)resultRow;
--(BOOL)operationContainsString:(NSString*)searchString inFields:(NSInteger)fields;
-
+@property (retain,nonatomic) NSColor* highlightColor;
 @end
