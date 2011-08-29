@@ -235,7 +235,7 @@ static NSColor *_static_greenHighlight = 0;
 			method.delegate = self.database;
 			DisassemblyWindowController * disWindowController = [[DisassemblyWindowController alloc] initWithMethod:method];
 			//FIXME: The window controller should be dealt with properly and not just leaked
-#pragma unused(disWindowController);
+#pragma unused(disWindowController)
 			
 			[method release];
 		}
@@ -342,7 +342,7 @@ static NSColor *_static_greenHighlight = 0;
 						
 						NSString * columnIdentifier = [NSString stringWithFormat:@"%ld",kAddressField];
 						NSInteger addressColumnIndex = [sender columnWithIdentifier: columnIdentifier];
-					    NSTableColumn* addressColumn = [sender  tableColumnWithIdentifier:columnIdentifier];
+					//    NSTableColumn* addressColumn = [sender  tableColumnWithIdentifier:columnIdentifier];
 						
 						
 						
@@ -373,7 +373,7 @@ static NSColor *_static_greenHighlight = 0;
 				NSInteger count = [allOps count];
 				while (count--){
 					if ([[(MOSOperation*)[allOps objectAtIndex:count] address] isEqualToString:jumpAddress]){
-					    [(NSTableView*)sender selectRow:count byExtendingSelection:NO];
+					    [(NSTableView*)sender selectRowIndexes:[NSIndexSet indexSetWithIndex:count] byExtendingSelection:NO];
 						[(NSTableView*)sender scrollRowToVisible:count];
 						break;
 					}

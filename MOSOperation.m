@@ -122,4 +122,17 @@
 		
 	return NO;
 }
+
+- (BOOL)isEqual:(id)operation
+{
+	MOSOperation* op = operation;
+	return [[self class] isEqual: [op class]]
+	&& [self.bytes isEqual:op.bytes]
+	&& (self.offset == op.offset);
+}
+
+- (NSUInteger)hash
+{
+	return [self.bytes hash] ^ self.offset;
+}
 @end

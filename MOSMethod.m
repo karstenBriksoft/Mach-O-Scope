@@ -32,7 +32,7 @@
 #import "ClassMethodWindowController.h"
 
 @implementation MOSMethod
-@synthesize rawInfo,methodID, methodName,methodType, returnType, notes;
+@synthesize rawInfo,methodID, methodName,methodType, returnType, notes, mclass;
 @synthesize highlightColor;
 @synthesize delegate;
 
@@ -81,6 +81,7 @@ static NSColor * _Static_blackColor;
 	self.returnType = nil;
 	self.notes = nil;
 	self.highlightColor = nil;
+	self.mclass = nil;
 	[super dealloc];
 }
 -(id)copyWithZone:(NSZone *)zone{
@@ -94,6 +95,7 @@ static NSColor * _Static_blackColor;
 		aCopy.returnType = self.returnType;
 		aCopy.notes = self.notes;
 		aCopy.highlightColor = self.highlightColor;
+		aCopy.mclass = self.mclass;
 		
 		[aCopy addObserver:aCopy forKeyPath:@"notes" options:0 context:0];
 	}
@@ -286,4 +288,20 @@ static NSColor * _Static_blackColor;
 	return [methods autorelease];
 }
 
+- (BOOL)isEqual:(id)object
+{
+	MOSMethod* method = (MOSMethod*)object;
+	return [[self class] isEqual: [object class]]
+	&& [self.rawInfo isEqual:method.rawInfo];
+}
+
+- (NSUInteger)hash
+{
+	return [self.rawInfo hash];
+}
+
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"Method: %@",self.rawInfo];
+}
 @end

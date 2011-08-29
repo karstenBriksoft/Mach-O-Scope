@@ -29,6 +29,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "Mach_O_scopeAppDelegate.h"
+#import "MOSDiffEngine.h"
+
 @implementation Mach_O_scopeAppDelegate
 @synthesize saveArchitecture;
 
@@ -158,5 +160,26 @@
 	[[[NSApp mainWindow] windowController] saveSymbols:sender];
 }
 
+- (IBAction)diffDisassemblies:(id)sender
+{
+	NSOpenPanel* op = [NSOpenPanel openPanel];
+	[op setAllowedFileTypes:[NSArray arrayWithObject:@"machoData"]];
+	
+	NSString* leftPath = @"";
+	NSString* rightPath = @"";
+	
+	[op setTitle:@"select left file"];
+	if ([op runModal])
+	{
+		leftPath = [op filename];
+	}
+	[op setTitle:@"select right file"];
+	if ([op runModal])
+	{
+		rightPath = [op filename];
+	}
+	MOSDiffEngine* engine = [[MOSDiffEngine alloc] initWithLeftFile:leftPath rightFile:rightPath];
+	[engine differences];
+}
 
 @end
