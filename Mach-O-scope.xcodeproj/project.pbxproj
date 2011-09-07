@@ -28,6 +28,7 @@
 		32E05A16119AFC2B00489307 /* MOSsymbolsTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E05A15119AFC2B00489307 /* MOSsymbolsTextFieldCell.m */; };
 		32E06331119B9A4E00489307 /* DisassemblyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E06330119B9A4E00489307 /* DisassemblyWindowController.m */; };
 		32E06338119B9A9700489307 /* DisassemblyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E06337119B9A9700489307 /* DisassemblyWindow.xib */; };
+		3D322BB91417F29E002FA7D1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D322BB81417F29E002FA7D1 /* WebKit.framework */; };
 		3D4A42F81407B7660031AF19 /* MOSDiffEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4A42F71407B7660031AF19 /* MOSDiffEngine.m */; };
 		3D4A42FD1407B9F80031AF19 /* MOSCollectionDifference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4A42FC1407B9F80031AF19 /* MOSCollectionDifference.m */; };
 		3DB7A3D714096BEB00B823D0 /* DiffBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DB7A3D614096BEB00B823D0 /* DiffBrowser.xib */; };
@@ -88,6 +89,7 @@
 		32E0632F119B9A4E00489307 /* DisassemblyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisassemblyWindowController.h; sourceTree = "<group>"; };
 		32E06330119B9A4E00489307 /* DisassemblyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisassemblyWindowController.m; sourceTree = "<group>"; };
 		32E06337119B9A9700489307 /* DisassemblyWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DisassemblyWindow.xib; sourceTree = "<group>"; };
+		3D322BB81417F29E002FA7D1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		3D4A42F61407B7660031AF19 /* MOSDiffEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSDiffEngine.h; sourceTree = "<group>"; };
 		3D4A42F71407B7660031AF19 /* MOSDiffEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOSDiffEngine.m; sourceTree = "<group>"; };
 		3D4A42FB1407B9F80031AF19 /* MOSCollectionDifference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSCollectionDifference.h; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				3222D4C21195EFFC007A29ED /* libsqlite3.dylib in Frameworks */,
+				3D322BB91417F29E002FA7D1 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +183,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				3D322BB81417F29E002FA7D1 /* WebKit.framework */,
 			);
 			name = "Mach-O-scope";
 			sourceTree = "<group>";

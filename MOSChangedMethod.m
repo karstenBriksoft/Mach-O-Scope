@@ -7,9 +7,29 @@
 //
 
 #import "MOSChangedMethod.h"
-
+#import "MOSMethod.h"
 
 @implementation MOSChangedMethod
 @synthesize newMethod, oldMethod;
+
+- (NSColor*)color
+{
+	return [NSColor blueColor];
+}
+
+- (NSString*)differenceDetail
+{
+	return [NSString stringWithFormat:@"%@>>%@",[self.mclass className],[self.oldMethod rawInfo]];
+}
+
+- (NSString*)leftDiffableString
+{
+	return [self.oldMethod diffableString];
+}
+
+- (NSString*)rightDiffableString
+{
+	return [self.newMethod diffableString];
+}
 
 @end

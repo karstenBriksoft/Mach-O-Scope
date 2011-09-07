@@ -11,4 +11,19 @@
 
 @implementation MOSDeletedClass
 
+- (NSColor*)color
+{
+	return [NSColor redColor];
+}
+
+- (NSString*)leftDiffableString
+{
+	return [self.mclass className];
+}
+
+- (NSString*)rightDiffableString
+{
+	return @"deleted";
+}
+
 @end

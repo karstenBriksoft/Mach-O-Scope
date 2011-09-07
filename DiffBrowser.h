@@ -7,11 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <WebKit/WebKit.h>
 
 @interface DiffBrowser : NSWindowController <NSTableViewDataSource, NSTableViewDelegate> {
 	IBOutlet NSTableView* tableView;
-	IBOutlet NSView* diffView;
+	IBOutlet WebView* diffView;
 	NSArray* differences;
 }
 

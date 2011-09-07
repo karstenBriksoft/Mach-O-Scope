@@ -135,4 +135,9 @@
 {
 	return [self.bytes hash] ^ self.offset;
 }
+
+- (NSString*)diffableString
+{
+	return [NSString stringWithFormat:@"%@   %@",self.bytes,self.opCode,self.symbols];
+}
 @end

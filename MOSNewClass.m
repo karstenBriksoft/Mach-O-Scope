@@ -11,4 +11,19 @@
 
 @implementation MOSNewClass
 
+- (NSColor*)color
+{
+	return [NSColor greenColor];
+}
+
+- (NSString*)leftDiffableString
+{
+	return @"not there yet";
+}
+
+- (NSString*)rightDiffableString
+{
+	return [self.mclass className];
+}
+
 @end

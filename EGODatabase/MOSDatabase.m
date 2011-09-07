@@ -77,7 +77,7 @@ static NSColor * _Static_redColor;
 }
 -(NSArray *)operationsForMethodID:(NSInteger)methodID{
 	
-	EGODatabaseResult * result = [self executeQueryWithParameters:@"select * from Operations where methodid = ?",[NSNumber numberWithInteger:methodID],nil];
+	EGODatabaseResult * result = [self executeQueryWithParameters:@"select * from Operations where methodid = ? order by offset",[NSNumber numberWithInteger:methodID],nil];
 	NSMutableArray * operations = [[NSMutableArray alloc] initWithCapacity:[result count]];
 	for (id row in result){
 		MOSOperation* operationObject =[[MOSOperation alloc] initWithResultRow:row];

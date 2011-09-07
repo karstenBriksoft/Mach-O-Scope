@@ -24,4 +24,19 @@
 	return [NSString stringWithFormat:@"%@>>%@",[super differenceDetail],deletedMethod.methodName];
 }
 
+- (NSColor*)color
+{
+	return [NSColor redColor];
+}
+
+- (NSString*)leftDiffableString
+{
+	return [self.deletedMethod diffableString];
+}
+
+- (NSString*)rightDiffableString
+{
+	return @"";
+}
+
 @end

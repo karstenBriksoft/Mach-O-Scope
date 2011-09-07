@@ -30,6 +30,7 @@
 
 #import "Mach_O_scopeAppDelegate.h"
 #import "MOSDiffEngine.h"
+#import "DiffBrowser.h"
 
 @implementation Mach_O_scopeAppDelegate
 @synthesize saveArchitecture;
@@ -179,7 +180,9 @@
 		rightPath = [op filename];
 	}
 	MOSDiffEngine* engine = [[MOSDiffEngine alloc] initWithLeftFile:leftPath rightFile:rightPath];
-	[engine differences];
+	DiffBrowser* browser = [[DiffBrowser alloc] init];
+	browser.differences = [engine differences];
+	[browser showWindow:nil];
 }
 
 @end

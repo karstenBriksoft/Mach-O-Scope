@@ -37,6 +37,16 @@
 	[super dealloc];
 }
 
+- (NSDictionary*)dictionaryFromMethods:(NSArray*)methods
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	for (MOSMethod* method in methods)
+	{
+		[dictionary setObject:method forKey:method.rawInfo];
+	}
+	return dictionary;
+}
+
 - (NSDictionary*)dictionaryFromClasses:(NSArray*)classes
 {
 	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
@@ -51,7 +61,7 @@
 {
 	NSMutableArray* differences = [NSMutableArray array];
 	
-	NSDictionary* leftClasses = [self dictionaryFromClasses:[MOSClass classesForDatabase:self.left]];
+	NSDictionary* leftClasses = [self dictionaryFromClasses:[MOSClass classesForDatabase: self.left]];
 	NSDictionary* rightClasses = [self dictionaryFromClasses:[MOSClass classesForDatabase: self.right]];
 	
 	MOSCollectionDifference* classDifference = [MOSCollectionDifference differenceForLeft: [leftClasses allValues] right: [rightClasses allValues]];
@@ -64,11 +74,23 @@
 		MOSClass* leftClass = [leftClasses objectForKey:class.className];
 		MOSClass* rightClass = [rightClasses objectForKey:class.className];
 		
+		NSDictionary* leftMethods = [self dictionaryFromMethods:[MOSMethod methodsInDatabase:self.left forClassID:leftClass.classID]];
+		NSDictionary* rightMethods = [self dictionaryFromMethods:[MOSMethod methodsInDatabase:self.right forClassID:rightClass.classID]];
+		
 		MOSCollectionDifference* methodDifference = [MOSCollectionDifference differenceForLeft:[leftClass methods] right:[rightClass methods]];
 		[differences addObjectsFromArray:[MOSNewMethod differencesFromObjects:methodDifference.newObjects]];
 		[differences addObjectsFromArray:[MOSDeletedMethod differencesFromObjects:methodDifference.deletedObjects]];
+	
+		for (MOSMethod* method in methodDifference.modifiedObjects)
+		{
+			MOSChangedMethod* changedMethod = [MOSChangedMethod difference];
+			changedMethod.mclass = class;
+			changedMethod.oldMethod = [leftMethods objectForKey:method.rawInfo];
+			changedMethod.newMethod = [rightMethods objectForKey:method.rawInfo];
+			[differences addObject:changedMethod];
+		}
 	}
-	NSLog(@"differences: %@",differences);
+//	NSLog(@"differences: %@",differences);
 	return differences;
 }
 							   

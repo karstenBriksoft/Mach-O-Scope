@@ -7,7 +7,7 @@
 //
 
 #import "DiffBrowser.h"
-
+#import "MOSDifference.h"
 
 @implementation DiffBrowser
 @synthesize differences;
@@ -25,7 +25,7 @@
 
 - (void)showDifference:(id)difference
 {
-
+	[[diffView mainFrame] loadHTMLString:[difference htmlRepresentation] baseURL:[NSURL URLWithString:@"http://localhost"]];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -35,7 +35,7 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	return [self.differences objectAtIndex: row];
+	return [[self.differences objectAtIndex: row] richDescription];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification;

@@ -13,6 +13,7 @@
 
 @interface MOSDifference : NSObject {
 	MOSClass* mclass;
+	NSString* diffString;
 }
 @property (retain) MOSClass* mclass;
 
@@ -21,7 +22,9 @@
 
 - (NSString*)differenceKind;
 - (NSString*)differenceDetail;
+- (NSAttributedString*)richDescription;
 
 - (void)initWithObject:(id)object;
+- (NSString*)htmlRepresentation;
 
 @end

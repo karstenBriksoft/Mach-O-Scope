@@ -30,6 +30,7 @@
 
 #import "MOSMethod.h"
 #import "ClassMethodWindowController.h"
+#import "MOSOperation.h"
 
 @implementation MOSMethod
 @synthesize rawInfo,methodID, methodName,methodType, returnType, notes, mclass;
@@ -107,6 +108,35 @@ static NSColor * _Static_blackColor;
 	NSLog(@"needs to be implemented: %s",__PRETTY_FUNCTION__);
 	return @"";
 }
+
+
+- (BOOL)isEqual:(id)object
+{
+	MOSMethod* method = (MOSMethod*)object;
+	return [[self class] isEqual: [object class]]
+	&& [self.rawInfo isEqual:method.rawInfo];
+}
+
+- (NSUInteger)hash
+{
+	return [self.rawInfo hash];
+}
+
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"Method: %@",self.rawInfo];
+}
+
+- (NSString*)diffableString
+{
+	NSMutableString* result = [NSMutableString string];
+	for (MOSOperation* operation in [self operations])
+	{
+		[result appendFormat:@"\t%@\n",[operation diffableString]];
+	}
+	return result;
+}
+
 @end
 
 @implementation MOSMethod (database)
@@ -286,22 +316,5 @@ static NSColor * _Static_blackColor;
 		[methodObject release];
 	}
 	return [methods autorelease];
-}
-
-- (BOOL)isEqual:(id)object
-{
-	MOSMethod* method = (MOSMethod*)object;
-	return [[self class] isEqual: [object class]]
-	&& [self.rawInfo isEqual:method.rawInfo];
-}
-
-- (NSUInteger)hash
-{
-	return [self.rawInfo hash];
-}
-
-- (NSString*)description
-{
-	return [NSString stringWithFormat:@"Method: %@",self.rawInfo];
 }
 @end

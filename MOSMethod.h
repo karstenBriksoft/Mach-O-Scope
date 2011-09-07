@@ -60,7 +60,7 @@
 +(NSString*)createTableSqlStatement;
 
 -(id)initWithResultRow:(EGODatabaseRow *) resultRow;
-
+-(NSString*)diffableString;
 
 @end
 

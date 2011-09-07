@@ -73,5 +73,6 @@ enum {
 +(NSString*)createTableSqlStatement;
 -(id)initWithResultRow:(EGODatabaseRow *)resultRow;
 -(BOOL)operationContainsString:(NSString*)searchString inFields:(NSInteger)fields;
+- (NSString*)diffableString;
 
 @end
