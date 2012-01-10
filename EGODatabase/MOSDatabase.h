@@ -49,9 +49,6 @@ enum {
 -(NSArray *)methodsForClass:(NSString*)className;
 -(NSArray *)operationsForMethodID:(NSInteger)methodID;
 -(NSArray *)classes;
--(BOOL)dropStructure;
--(BOOL)createStructure;
--(NSArray *)methodsForClassID:(NSInteger)classID;
 @end
 
 

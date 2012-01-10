@@ -29,7 +29,6 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "MOSDatabase.h"
-#import "ClassMethodWindowController.h"
 
 const NSInteger structureVersion = 1;
 #import "MOSClass.h"
@@ -70,17 +69,26 @@ static NSColor * _Static_redColor;
 
 }
 
--(NSArray *)methodsForClassID:(NSInteger)classID
-{
+-(NSArray *)methodsForClassID:(NSInteger)classID{
 	return [MOSMethod methodsInDatabase:self forClassID:classID searchingFor:[self.delegate symbolFilter] inContext:[self.delegate searchContext]];
 	
 }
 -(NSArray *)operationsForMethodID:(NSInteger)methodID{
 	
-	EGODatabaseResult * result = [self executeQueryWithParameters:@"select * from Operations where methodid = ? order by offset",[NSNumber numberWithInteger:methodID],nil];
+	EGODatabaseResult * result = [self executeQueryWithParameters:@"select * from Operations where methodid = ?",[NSNumber numberWithInteger:methodID],nil];
 	NSMutableArray * operations = [[NSMutableArray alloc] initWithCapacity:[result count]];
 	for (id row in result){
 		MOSOperation* operationObject =[[MOSOperation alloc] initWithResultRow:row];
+		[operationObject setDelegate:  self];
+		NSString * searchSymbol = [self.delegate symbolFilter];
+		if ([self.delegate searchContext] == kSymbolSearch && [searchSymbol length]>0){
+			if ([operationObject.symbols rangeOfString:searchSymbol options: NSCaseInsensitiveSearch].location == NSNotFound){
+				operationObject.highlightColor = _Static_greyColor;
+			}
+			else{
+				operationObject.highlightColor = _Static_blackColor;
+			}
+		}
 		[operations addObject:operationObject];
 		[operationObject release];
 	}
@@ -92,8 +100,7 @@ static NSColor * _Static_redColor;
 -(BOOL)updateStructuresIfNecessary{
 	return [MOSMethod updateTableIfNecessaryForDatabase:self];
 }
--(BOOL)createStructure
-{
+-(BOOL)createStructure{
 	
 	[self executeUpdateWithParameters:@"create table properties (ROWID INTEGER PRIMARY KEY, key text, value text, UNIQUE (key))",nil];
 	if ([self hadError]) {
@@ -151,10 +158,5 @@ static NSColor * _Static_redColor;
 		
 	}
 	return self;
-}
--(NSArray *)methodsForClass:(NSString*)className
-{
-	NSLog(@"needs to be implemented: %s",__PRETTY_FUNCTION__);
-	return [NSArray array];
 }
 @end

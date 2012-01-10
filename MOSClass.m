@@ -28,7 +28,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "MOSClass.h"
-#import "MOSMethod.h"
 #import "MOSDatabase.h"
 #import "EGODatabaseResult.h"
 #import "EGODatabaseRow.h"
@@ -90,14 +89,9 @@
 	return self;
 }
 
--(id)methods
-{
-	NSArray* methods = [self.delegate methodsForClassID:self.classID];
-	for (MOSMethod* method in methods)
-	{
-		method.mclass = self;
-	}
-	return methods;
+-(id)methods{
+	return [self.delegate methodsForClassID:self.classID];
+	
 }
 
 -(void)dealloc{
@@ -110,27 +104,5 @@
 	return aCopy;
 }
 
-+ (NSArray *)classesForDatabase:(MOSDatabase*)database whoseMethodsReferToSymbol:(NSString*) aSymbol
-{
-	NSLog(@"needs to be implemented: %s",__PRETTY_FUNCTION__);
-	return [NSArray array];
-}
-
-- (BOOL)isEqual:(id)object
-{
-	MOSClass* class = (MOSClass*)object;
-	return ([self class] == [object class]) 
-	&& [self.className isEqual: class.className];
-}
-
-- (NSUInteger)hash
-{
-	return [self.className hash];
-}
-
-- (NSString*)description
-{
-	return [NSString stringWithFormat:@"Class: %@",self.className];
-}
 
 @end
