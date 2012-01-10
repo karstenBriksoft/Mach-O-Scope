@@ -1,11 +1,10 @@
 //
-//  MOSClass.h
+//  MOSDataTextFieldCell.h
 //  Mach-O-scope
 //
-//  Created by Scott Morrison on 10-05-08.
+//  Created by Scott Morrison on 10-09-04.
 //  Copyright 2010 Indev Software, Inc. All rights reserved.
 //
-
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //     1. Redistributions of source code must retain the above copyright
@@ -29,23 +28,9 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import <Cocoa/Cocoa.h>
-#import "MOSDatabase.h"
+#import "MOSTextFieldCell.h"
 
-@interface MOSClass : NSObject <NSCopying>{
-	NSInteger classID;
-	NSString * className;
-	NSString * name;
-	id delegate;
+@interface MOSDataTextFieldCell : MOSTextFieldCell {
 }
 
-@property (assign) id delegate;
-@property (assign) NSInteger classID;
-@property (copy) NSString * className;
-@property (copy) NSString * name;
-
--(id)initWithID:(NSInteger) aClassID andName:(NSString*) name;
--(NSArray *)methods;
-+ (NSArray *)classesForDatabase:(MOSDatabase*)database;
-+ (NSArray *)classesForDatabase:(MOSDatabase*)database whoseMethodsReferToSymbol:(NSString*) aSymbol;
-+ (NSArray *)classesForDatabase:(MOSDatabase*)database searchingFor:(NSString*) aSymbol inContext:(NSInteger) context;
 @end

@@ -41,5 +41,9 @@
 
 -(IBAction)openDocument:(id)sender;
 -(IBAction)disassembleMachO:(id)sender;
+-(IBAction)disassembleWithOtx:(id)sender;
 -(IBAction)setArchitecture:(id)sender;
+-(IBAction)saveSymbols:(id)sender;
+- (IBAction)diffDisassemblies:(id)sender;
+
 @end

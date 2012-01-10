@@ -32,7 +32,10 @@
 
 #import "MOSDatabase.h"
 #import "EGODatabaseRow.h"
+@class MOSClass;
+
 @interface MOSMethod : NSObject {
+	MOSClass* mclass;
 	NSString * rawInfo;
 	NSString * methodName;
 	NSInteger  methodID;
@@ -52,6 +55,8 @@
 @property (copy) NSString *returnType;
 @property (copy) NSString *notes;
 @property (assign) NSColor * highlightColor;
+@property (retain) MOSClass* mclass;
+
 +(NSString*)createTableSqlStatement;
 
 -(id)initWithResultRow:(EGODatabaseRow *) resultRow;

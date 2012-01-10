@@ -29,6 +29,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "Mach_O_scopeAppDelegate.h"
+#import "MOSDiffEngine.h"
+
 @implementation Mach_O_scopeAppDelegate
 @synthesize saveArchitecture;
 
@@ -39,6 +41,26 @@
 	self.saveArchitecture =@"i386";
 }
 
+-(IBAction)disassembleWithOtx:(id)sender
+{
+	NSOpenPanel * openPanel = [NSOpenPanel openPanel];
+	NSArray * pathsToSearch = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory,0, YES);
+	
+	if ([pathsToSearch count]){	
+		[openPanel setDirectoryURL:[NSURL fileURLWithPath: [pathsToSearch objectAtIndex:0] isDirectory:NO]];
+	}
+	
+	[openPanel beginWithCompletionHandler:^(NSInteger result){
+		if(result ==NSFileHandlingPanelOKButton){
+			
+			NSString * otxPath =  [[[openPanel URLs] objectAtIndex:0] path];
+			
+			[self performSelector:@selector(setSaveDatabaseForOtxFile:) withObject:otxPath afterDelay:0 ];
+			
+			
+		}
+	} ];	
+}
 -(IBAction)disassembleMachO:(id)sender{
 	
 	NSOpenPanel * openPanel = [NSOpenPanel openPanel];
@@ -65,7 +87,8 @@
 }
 
 
--(void)setSaveDatabaseForInputFile:(id)bundlePath   {
+-(void)setSaveDatabaseForInputFile:(id)bundlePath   
+{
 	if (!bundlePath) return;
 	
 	NSSavePanel	* savePanel = [NSSavePanel savePanel];
@@ -81,6 +104,29 @@
 			
 			[initialController showWindow:nil];
 			[initialController performSelector:@selector(importBundleAtPath:) withObject:bundlePath afterDelay:0];
+			[initialController release];
+		}
+	}];
+	
+}
+
+-(void)setSaveDatabaseForOtxFile:(id)otxPath   
+{
+	if (!otxPath) return;
+	
+	NSSavePanel	* savePanel = [NSSavePanel savePanel];
+	[savePanel setPrompt:@"Save"];
+	[savePanel setNameFieldStringValue:[[otxPath lastPathComponent] stringByAppendingString:@".machoData"]];
+	[savePanel setAccessoryView:saveAccessoryView];
+	[savePanel beginWithCompletionHandler:^(NSInteger result){
+		if (result == NSFileHandlingPanelOKButton){
+			NSString * dataFilePath =  [[savePanel URL]  path];
+			
+			ClassMethodWindowController* initialController = [[ClassMethodWindowController alloc] initWithDatabasePath:dataFilePath];
+			[windowControllers addObject: initialController];
+			
+			[initialController showWindow:nil];
+			[initialController performSelector:@selector(importOtxAtPath:) withObject:otxPath afterDelay:0];
 			[initialController release];
 		}
 	}];
@@ -109,7 +155,31 @@
 }
 
 
+-(IBAction)saveSymbols:(id)sender
+{
+	[[[NSApp mainWindow] windowController] saveSymbols:sender];
+}
 
-
+- (IBAction)diffDisassemblies:(id)sender
+{
+	NSOpenPanel* op = [NSOpenPanel openPanel];
+	[op setAllowedFileTypes:[NSArray arrayWithObject:@"machoData"]];
+	
+	NSString* leftPath = @"";
+	NSString* rightPath = @"";
+	
+	[op setTitle:@"select left file"];
+	if ([op runModal])
+	{
+		leftPath = [op filename];
+	}
+	[op setTitle:@"select right file"];
+	if ([op runModal])
+	{
+		rightPath = [op filename];
+	}
+	MOSDiffEngine* engine = [[MOSDiffEngine alloc] initWithLeftFile:leftPath rightFile:rightPath];
+	[engine differences];
+}
 
 @end
